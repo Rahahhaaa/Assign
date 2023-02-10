@@ -1,39 +1,41 @@
 import { useState } from "react";
 
 function Sublist() {
-    var [text, setText] = useState([]);
-    var onKeyPress = (e) => {
-        if (e.key === "Enter" && e.target.value == "") {
-            alert("일정을 입력하세요");
-        } else if (e.key === "Enter" && e.target.value != "") {
-            var temp = [...text];
+    var [item, setItem] = useState([]);
+
+    var onKeyDown = (e) => {
+        if (e.key === "Enter" && e.target.value == "" && !e.shiftKey) {
+            alert("일정을 입력하세요")
+            e.preventDefault();
+        } else if (e.key === "Enter" && !e.shiftKey) {
+            var temp = [...item];
             temp.push(e.target.value);
-            setText(temp);
-            e.value = undefined;
+            setItem(temp);
+            e.preventDefault();
+            e.target.value = "";
         }
     }
-    var sublist = text.map(function (value, key) {
+
+    var subList = item.map(function (value, key) {
         return (
-            <div style={{
-                paddingLeft: "2px",
-                fontSize: "20px"
-            }}>
-                {value}
-                <button onClick={() => {
-                    var temp = [...text];
+            <div>
+                <textarea defaultValue={value + key}></textarea><button onClick={() => {
+                    var temp = [...item];
+                    alert(key);
                     temp.splice(key, 1);
-                    setText(temp);
+                    alert([...temp]);
+                    setItem([...temp]);
+                    alert([...item])
                 }}>삭제</button>
             </div>
         )
-    });
+    })
+
 
     return (
-        <div style={{ textAlign: "left" }}>
-            {sublist}
-            <textarea onKeyDown={onKeyPress} style={{
-                fontSize: "20px"
-            }}></textarea>
+        <div>
+            {subList}
+            <textarea placeholder="일정을 입력하세요" onKeyDown={onKeyDown}></textarea>
         </div>
     )
 }
