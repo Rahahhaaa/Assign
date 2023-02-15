@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.css';
+import { Container, Row, Col } from "react-bootstrap";
 
 function Sublist() {
-    var [item, setItem] = useState([]);
+    let [item, setItem] = useState([]);
 
-    var onKeyDown = (e) => {
+    const onKeyDown = (e) => {
         if (e.key === "Enter" && e.target.value == "" && !e.shiftKey) {
-            alert("Please enter a schedule");
+            alert("일정을 입력하세요")
             e.preventDefault();
         } else if (e.key === "Enter" && !e.shiftKey) {
             var temp = [...item];
@@ -17,48 +18,38 @@ function Sublist() {
         }
     }
 
-    var subList = item.map(function (value, key) {
+    let subList = item.map(function (value, key) {
+        console.log(value, key);
         return (
-            <Row style={{ paddingBottom: "12px" }}>
-                <Col style={{
-                    paddingLeft: "2px",
-                    fontSize: "12px",
-                    width: "150px",
-                    textAlign: "left",
-                    backgroundColor: "#f2f2f2",
-                    borderRadius: "5px"
-                }} onClick={() => {
-                    alert("Clicked")
-                }}>
-                    {value}
+            <Row style={{ textAlign: "left" }}>
+                <Col>
+                    <textarea style={{ resize: "none", fontSize: "13px", width: "250px", textAlign: "left" }} value={value}></textarea>
                 </Col>
                 <Col>
-                    <Button size="sm" style={{ marginLeft: "5px" }} onClick={() => {
-                        var temp = [...item];
+                    <button onClick={() => {
+                        let temp = [...item];
                         temp.splice(key, 1);
+                        console.log(key);
                         setItem(temp);
-                    }}>Delete</Button>
+                    }}>삭제</button>
                 </Col>
             </Row>
         )
     });
 
+
     return (
-        <div style={{ paddingLeft: "20px" }}>
-            {subList}
-            <Row style={{ textAlign: "left" }}>
-                <textarea style={{
-                    fontSize: "13px",
-                    width: "150px",
-                    textAlign: "left",
-                    backgroundColor: "#f2f2f2",
-                    borderRadius: "5px",
-                    paddingLeft: "5px",
-                    paddingTop: "5px"
-                }} placeholder="Enter a schedule" onKeyDown={onKeyDown}></textarea>
-            </Row>
+        <div>
+            <Container>
+                {subList}
+                <Row style={{ textAlign: "left" }}>
+                    <textarea style={{ paddingLeft: "2px", resize: "none", fontSize: "13px", width: "250px", textAlign: "left" }} placeholder="일정을 입력하세요" onKeyDown={onKeyDown}></textarea>
+                </Row>
+            </Container>
         </div>
     )
 }
 
 export default Sublist;
+
+
