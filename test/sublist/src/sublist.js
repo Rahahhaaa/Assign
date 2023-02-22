@@ -1,7 +1,7 @@
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import { Container, Row, Col } from "react-bootstrap";
-
+import { DashCircle } from "react-bootstrap-icons";
 function Sublist() {
     let [item, setItem] = useState([]);
 
@@ -18,22 +18,31 @@ function Sublist() {
         }
     }
 
+    let [text, setText] = useState([]);
     let subList = item.map(function (value, key) {
         console.log(value, key);
         return (
-            <Row style={{ textAlign: "left" }}>
-                <Col>
-                    <textarea style={{ resize: "none", fontSize: "13px", width: "250px", textAlign: "left" }} value={value}></textarea>
-                </Col>
-                <Col>
-                    <button onClick={() => {
-                        let temp = [...item];
-                        temp.splice(key, 1);
-                        console.log(key);
-                        setItem(temp);
-                    }}>삭제</button>
-                </Col>
-            </Row>
+            <>
+                <Row style={{ textAlign: "left" }}>
+                    <Col >
+                        <input style={{ resize: "none", fontSize: "13px", width: "500px", textAlign: "left" }} value={value} onChange={
+                            (e) => {
+                                let temp = [...item];
+                                temp[key] = e.target.value;
+                                setItem(temp);
+                            }
+                        } onBlur={() => { console.log("씨발!!") }}></input>
+                    </Col >
+                    <Col className="mybutton" >
+                        <div onClick={() => {
+                            let temp = [...item];
+                            temp.splice(key, 1);
+                            console.log(key);
+                            setItem(temp);
+                        }} ><DashCircle /></div>
+                    </Col>
+                </Row >
+            </>
         )
     });
 
@@ -43,7 +52,7 @@ function Sublist() {
             <Container>
                 {subList}
                 <Row style={{ textAlign: "left" }}>
-                    <textarea style={{ paddingLeft: "2px", resize: "none", fontSize: "13px", width: "250px", textAlign: "left" }} placeholder="일정을 입력하세요" onKeyDown={onKeyDown}></textarea>
+                    <Col><input style={{ marginLeft: "0px", resize: "none", fontSize: "13px", width: "250px", textAlign: "left" }} placeholder="일정을 입력하세요" onKeyDown={onKeyDown}></input></Col>
                 </Row>
             </Container>
         </div>

@@ -1,0 +1,3 @@
+집가기 | 집으로가기 | None
+반갑다 | 음그래 | None
+hello | World | False

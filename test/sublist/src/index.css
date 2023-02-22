@@ -46,3 +46,11 @@ code {
   box-sizing: border-box;
   font-family: 'Noto Sans KR', sans-serif;
 }
+
+/* .mybutton {
+  visibility: hidden;
+}
+
+.mybutton:hover {
+  visibility: visible;
+} */
